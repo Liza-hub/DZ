@@ -10,7 +10,7 @@ int main()
 	FILE* f, * g;
 	f = fopen("in_bin.txt", "w+");
 	int a, b, n, i, s;
-	long offset=4;
+	long offset=0;
 	srand((unsigned)time_t(NULL));
 	puts("Введите n:");
 	scanf("%d", &n);
@@ -26,14 +26,15 @@ int main()
 	if (n % 2 == 1) n = n + 1;
 	while (i!=n/2)
 	{
-		fseek(f,-offset, 2);
-		fread(&a, sizeof(a), 1, f);
+		fseek(f,-(offset+4), 2);
+		fread(&b, sizeof(b), 1, f);
 		fseek(f, offset, 0);
 		fread(&a, sizeof(a), 1, f);
 		offset = offset + 4;
+		s = a + b;
+		printf("%d +%4d=%5d\n", a, b, s);
 		i++;
 	}
 	fclose(f);
-	fclose(g);
 	return 0;
 }
